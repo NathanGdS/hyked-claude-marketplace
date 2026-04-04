@@ -1,28 +1,18 @@
 {
+  "name": "hyked-claude-marketplace",
+  "description": "Hyked Claude Marketplace: Spec-Driven Development (SDD) skills for structured feature planning and execution.",
+  "owner": {
+    "name": "Nathan G. Santos"
+  },
+  "version": "0.1.0",
   "plugins": [
     {
-      "id": "hyked-dev",
-      "name": "dev-team",
-      "namespace": "hyked-dev",
+      "name": "hyked-dev",
       "description": "Spec-Driven Development toolkit: plan, execute, and finalize features using a structured .shadow workflow with parallel worker agents.",
-      "tags": ["sdd", "planning", "execution", "implementation", "finalization", "archive"],
-      "skills": [
-        {
-          "name": "nano-plan",
-          "command": "/shadow-plan",
-          "path": "plugins/dev-team/nano-plan/SKILL.md"
-        },
-        {
-          "name": "nano-run",
-          "command": "/shadow-run",
-          "path": "plugins/dev-team/nano-run/SKILL.md"
-        },
-        {
-          "name": "nano-finish",
-          "command": "/sdd-finish",
-          "path": "plugins/dev-team/nano-finish/SKILL.md"
-        }
-      ]
+      "version": "0.1.0",
+      "source": "./plugins/dev-team",
+      "license": "MIT",
+      "keywords": ["sdd", "planning", "execution", "implementation", "finalization", "archive"]
     }
   ]
 }
