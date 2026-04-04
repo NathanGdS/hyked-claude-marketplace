@@ -1,0 +1,28 @@
+{
+  "plugins": [
+    {
+      "id": "hyked-dev",
+      "name": "dev-team",
+      "namespace": "hyked-dev",
+      "description": "Spec-Driven Development toolkit: plan, execute, and finalize features using a structured .shadow workflow with parallel worker agents.",
+      "tags": ["sdd", "planning", "execution", "implementation", "finalization", "archive"],
+      "skills": [
+        {
+          "name": "nano-plan",
+          "command": "/shadow-plan",
+          "path": "plugins/dev-team/nano-plan/SKILL.md"
+        },
+        {
+          "name": "nano-run",
+          "command": "/shadow-run",
+          "path": "plugins/dev-team/nano-run/SKILL.md"
+        },
+        {
+          "name": "nano-finish",
+          "command": "/sdd-finish",
+          "path": "plugins/dev-team/nano-finish/SKILL.md"
+        }
+      ]
+    }
+  ]
+}
