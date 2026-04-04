@@ -4,17 +4,17 @@ tags: [sdd, execution, implementation]
 name: hyked-dev:nano-run
 ---
 
-# Command: /shadow-run
+# Command: /hyked-run
 
 **Function**:
-1. Locates the active WIP feature in `.shadow/wip/`.
+1. Locates the active WIP feature in `.hyked/wip/`.
 2. Reads `spec_state.json` — extracts all US with `"status": "pending"`.
 3. Spawns parallel worker agents, one per pending US.
 4. On success, updates `status` to `"done"` in `spec_state.json`.
 
 **Usage**:
 ```
-/shadow-run [FEATURE_ID] [--parallel-limit=N]
+/hyked-run [FEATURE_ID] [--parallel-limit=N]
 ```
 
 ---
@@ -23,8 +23,8 @@ name: hyked-dev:nano-run
 
 ### 1. Locate feature
 
-- If `FEATURE_ID` is given, use `.shadow/wip/FEATURE_ID-*/`.
-- Otherwise, use the most recently modified folder in `.shadow/wip/`.
+- If `FEATURE_ID` is given, use `.hyked/wip/FEATURE_ID-*/`.
+- Otherwise, use the most recently modified folder in `.hyked/wip/`.
 
 ### 2. Load state
 
@@ -61,7 +61,7 @@ After each worker completes successfully:
 After all workers finish, print:
 
 ```
-/shadow-run complete
+/hyked-run complete
 ✅ Done:    US-1, US-3
 ⚠ Blocked: US-2 — {reason}
 ```

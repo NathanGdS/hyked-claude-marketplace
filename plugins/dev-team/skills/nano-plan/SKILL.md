@@ -1,19 +1,19 @@
 ---
-description: Initiates the Spec-Driven Development flow by planning features and setting up the .shadow structure.
+description: Initiates the Spec-Driven Development flow by planning features and setting up the .hyked structure.
 tags: [sdd, planning, spec]
 name: hyked-dev:nano-plan
 ---
 
-# Command: /shadow-plan
+# Command: /hyked-plan
 
 **Function**:
 1. Drafts User Stories (US) based on feature name and description.
 2. Manages the Approval / Iteration / Rejection cycle with the user.
-3. Upon approval: increments `./shadow/counter`, creates the WIP directory, and writes **2 files** — `root.md` and `spec_state.json`.
+3. Upon approval: increments `./hyked/counter`, creates the WIP directory, and writes **2 files** — `root.md` and `spec_state.json`.
 
 **Usage**:
 ```
-/shadow-plan "Feature Name" --desc="Detailed description"
+/hyked-plan "Feature Name" --desc="Detailed description"
 ```
 
 ---
@@ -22,7 +22,7 @@ name: hyked-dev:nano-plan
 
 ### Step 1 — Draft US
 
-Read `./shadow/counter` to determine next ID (e.g. `0012`). Present stories to the user:
+Read `./hyked/counter` to determine next ID (e.g. `0012`). Present stories to the user:
 
 ```
 Feature: {Feature Name}  [ID: XXXX]
@@ -43,9 +43,9 @@ Use `AskUserQuestion` to ask:
 
 ### Step 3 — Write output (2 files only)
 
-**Increment counter**: write `XXXX` (zero-padded to 4 digits) to `./shadow/counter`.
+**Increment counter**: write `XXXX` (zero-padded to 4 digits) to `./hyked/counter`.
 
-**Create directory**: `.shadow/wip/XXXX-{feature-name}/`
+**Create directory**: `.hyked/wip/XXXX-{feature-name}/`
 
 ---
 
@@ -98,7 +98,7 @@ Machine state — all US specs and statuses. Schema:
 ## Output Structure
 
 ```
-.shadow/
+.hyked/
 ├── counter          ← updated to XXXX
 └── wip/
     └── XXXX-{feature-name}/

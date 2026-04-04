@@ -8,7 +8,7 @@ name: hyked-dev:nano-finish
 
 **Function**:
 1. Validates all US are complete in `spec_state.json`.
-2. Generates an archive `.md` in `.shadow/features/`.
+2. Generates an archive `.md` in `.hyked/features/`.
 3. Deletes the WIP directory.
 
 **Usage**:
@@ -22,8 +22,8 @@ name: hyked-dev:nano-finish
 
 ### 1. Locate feature
 
-- If `FEATURE_ID` given, use `.shadow/wip/FEATURE_ID-*/`.
-- Otherwise, use the most recently modified folder in `.shadow/wip/`.
+- If `FEATURE_ID` given, use `.hyked/wip/FEATURE_ID-*/`.
+- Otherwise, use the most recently modified folder in `.hyked/wip/`.
 
 ### 2. Validate
 
@@ -33,7 +33,7 @@ Read `spec_state.json`. If any story has `"status": "pending"`:
 
 ### 3. Generate archive
 
-Write `.shadow/features/XXXX-{feature-name}.md` using this template:
+Write `.hyked/features/XXXX-{feature-name}.md` using this template:
 
 ```markdown
 # XXXX — {title}
@@ -80,12 +80,12 @@ Write `.shadow/features/XXXX-{feature-name}.md` using this template:
 
 ### 4. Cleanup
 
-Delete the entire `.shadow/wip/XXXX-{feature-name}/` directory.
+Delete the entire `.hyked/wip/XXXX-{feature-name}/` directory.
 
 ### 5. Confirm
 
 Print:
 ```
-✅ Feature XXXX archived → .shadow/features/XXXX-{feature-name}.md
+✅ Feature XXXX archived → .hyked/features/XXXX-{feature-name}.md
 🗑  WIP directory removed
 ```
