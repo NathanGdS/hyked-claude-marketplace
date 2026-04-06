@@ -13,6 +13,14 @@
       "source": "./plugins/dev-team",
       "license": "MIT",
       "keywords": ["sdd", "planning", "execution", "implementation", "finalization", "archive"]
+    },
+    {
+      "name": "hyked-default",
+      "description": "General-purpose Hyked skills: productivity, knowledge management, and cross-tool utilities.",
+      "version": "0.1.0",
+      "source": "./plugins/default",
+      "license": "MIT",
+      "keywords": ["obsidian", "notes", "knowledge", "productivity", "markdown"]
     }
   ]
 }
