@@ -121,8 +121,10 @@ Read the frontmatter and first heading of each file. Classify:
 | Classification | Action |
 |----------------|--------|
 | **Same topic** (very similar title/content) | Warn user: "A similar note exists at `path`. Merge or create new?" |
-| **Related topic** | Collect as cross-references to add to new note's `## Referências` |
+| **Related topic** | Collect as cross-references to add to new note's `## Referências` — **only if the file physically exists in the vault** |
 | **Index / MOC file** | Flag for back-reference update in Step 7 |
+
+**Cross-reference rule:** Only add `[[wikilinks]]` to notes that were found on disk during this scan. Never generate links to files that do not exist — Obsidian will display them as broken (red) links and pollute the graph view.
 
 ---
 
@@ -191,6 +193,14 @@ flowchart TD
 ```
 ````
 
+**Mermaid line-break rule:** Obsidian's mermaid renderer does **not** support `\n` as a line break inside node labels. Use `<br/>` for multi-line labels instead:
+
+```
+A["Linha 1<br/>Linha 2"] --> B[Nó B]
+```
+
+Never use `\n` inside node labels — it renders literally as the characters `\n`.
+
 ---
 
 ## Step 6 — Write and Open
@@ -252,3 +262,5 @@ Only write to files the user explicitly approves. When approved, append the wiki
 - **Don't use `[text](path)` for internal links** — always `[[wikilinks]]`
 - **Don't merge with an existing note without explicit user approval**
 - **Don't auto-update back-reference files** — always ask first
+- **Never create `[[wikilinks]]` to files that don't exist** — scan first, link only to files found on disk
+- **Never use `\n` in mermaid node labels** — use `<br/>` for line breaks inside labels
