@@ -21,7 +21,8 @@ plugins/
 │       ├── commiter/
 │       ├── obsidian-note/
 │       ├── skill-creator/
-│       └── skill-tester/
+│       ├── skill-tester/
+│       └── write-prd/
 └── dev-team/         → hyked-dev plugin (SDD workflow)
     ├── skills/
     │   ├── shadow-plan/
@@ -129,6 +130,7 @@ Skills are invoked via the Skill tool or `/` command:
 /shadow-finish [FEATURE_ID]
 /shadow-docs [FEATURE_ID] --dist=[PATH]
 /shadow-nano "Feature Name" --desc="Description"
+/write-prd
 ```
 
 Agents are dispatched via the `<dispatch_required agent="shadow:agent-name">` block inside skills, which maps to `Agent(subagent_type: "shadow:agent-name", ...)`.

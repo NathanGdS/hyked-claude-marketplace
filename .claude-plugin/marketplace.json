@@ -20,7 +20,7 @@
       "version": "0.1.0",
       "source": "./plugins/default",
       "license": "MIT",
-      "keywords": ["obsidian", "notes", "knowledge", "productivity", "markdown"]
+      "keywords": ["obsidian", "notes", "knowledge", "productivity", "markdown", "prd", "product", "planning"]
     }
   ]
 }
