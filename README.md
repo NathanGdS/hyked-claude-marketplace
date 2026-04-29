@@ -27,13 +27,14 @@ Spec-Driven Development toolkit — plan, execute, and finalize features using a
 | `shadow-finish` | Validate all stories complete, then archive |
 | `shadow-docs` | Generate Mermaid flow documentation |
 | `shadow-nano` | Run all phases in sequence |
+| `tdd` | Test-driven development with red-green-refactor loop |
 
 **Agents:**
 
 | Agent | Role |
 |---|---|
 | `spec-architect` | Decomposes features into User Stories |
-| `code-specialist` | Implements code for a User Story |
+| `code-specialist` | Implements a User Story with full TDD discipline (Planning → Tracer Bullet → Incremental Loop → Refactor) |
 | `review-agent` | Reviews code-specialist output |
 | `spec-archivist` | Validates and archives completed features |
 | `spec-writer` | Generates documentation |
@@ -68,7 +69,14 @@ General-purpose skills — productivity, knowledge management, and cross-tool ut
 │       │   ├── shadow-run/
 │       │   ├── shadow-finish/
 │       │   ├── shadow-docs/
-│       │   └── shadow-nano/
+│       │   ├── shadow-nano/
+│       │   └── tdd/
+│       ├── references/               ← Shared reference docs for agents
+│       │   ├── tests.md
+│       │   ├── mocking.md
+│       │   ├── refactoring.md
+│       │   ├── interface-design.md
+│       │   └── deep-modules.md
 │       └── agents/
 │           ├── spec-architect.md
 │           ├── code-specialist.md
