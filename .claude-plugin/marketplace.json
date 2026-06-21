@@ -21,6 +21,14 @@
       "source": "./plugins/default",
       "license": "MIT",
       "keywords": ["obsidian", "notes", "knowledge", "productivity", "markdown", "prd", "product", "planning"]
+    },
+    {
+      "name": "hyked-constitution",
+      "description": "Bootstrap and enforce a per-project CONSTITUTION.md: a deterministic hook blocks clear-cut rule violations and silent self-edits, a skill handles nuanced judgment calls and the amendment process.",
+      "version": "0.1.0",
+      "source": "./plugins/constitution",
+      "license": "MIT",
+      "keywords": ["constitution", "governance", "compliance", "hooks", "amendments"]
     }
   ]
 }
