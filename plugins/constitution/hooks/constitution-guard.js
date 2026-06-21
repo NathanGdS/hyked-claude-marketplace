@@ -128,6 +128,71 @@ function checkForbiddenPatterns(rows, relativeFilePath, editedTexts) {
   return null;
 }
 
+function applyEdit(content, edit) {
+  const { old_string, new_string, replace_all } = edit;
+  if (replace_all) return content.split(old_string).join(new_string);
+  const idx = content.indexOf(old_string);
+  if (idx === -1) return content;
+  return content.slice(0, idx) + new_string + content.slice(idx + old_string.length);
+}
+
+function computePostEditContent(currentContent, toolName, toolInput) {
+  if (toolName === 'Write') return toolInput.content || '';
+  if (toolName === 'Edit') return applyEdit(currentContent, toolInput);
+  if (toolName === 'MultiEdit') {
+    let content = currentContent;
+    for (const edit of toolInput.edits || []) content = applyEdit(content, edit);
+    return content;
+  }
+  return currentContent;
+}
+
+function splitArticles(content) {
+  const map = new Map();
+  const re = /^### (CONST-\d+)[^\n]*$/gm;
+  const matches = [...content.matchAll(re)];
+  for (let i = 0; i < matches.length; i++) {
+    const id = matches[i][1];
+    const start = matches[i].index;
+    const end = i + 1 < matches.length ? matches[i + 1].index : content.length;
+    map.set(id, content.slice(start, end).trim());
+  }
+  return map;
+}
+
+function diffChangedArticleIds(preMap, postMap) {
+  const ids = new Set([...preMap.keys(), ...postMap.keys()]);
+  const changed = new Set();
+  for (const id of ids) {
+    if (preMap.get(id) !== postMap.get(id)) changed.add(id);
+  }
+  return changed;
+}
+
+function todayStr(date) {
+  const d = date || new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, '0');
+  const dd = String(d.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function amendmentHasSameDayEntry(amendmentsText, articleId, today) {
+  const entries = amendmentsText.split(/^## Amendment /m).slice(1);
+  for (const entry of entries) {
+    const dateMatch = entry.match(/--\s*(\d{4}-\d{2}-\d{2})/);
+    if (!dateMatch || dateMatch[1] !== today) continue;
+    const articleMatch = entry.match(/\*\*Article\(s\):\*\*\s*(.+)/);
+    if (!articleMatch) continue;
+    const ids = articleMatch[1]
+      .split(/[\s,]+/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    if (ids.includes(articleId)) return true;
+  }
+  return false;
+}
+
 function main() {
   const input = readInput();
   if (!input) process.exit(0);
@@ -138,8 +203,31 @@ function main() {
   const constitutionPath = path.join(projectRoot, 'CONSTITUTION.md');
   const constitutionText = fs.readFileSync(constitutionPath, 'utf8');
   const filePath = path.resolve(projectRoot, input.toolInput.file_path);
-  const relativeFilePath = toPosix(path.relative(projectRoot, filePath));
 
+  if (filePath === path.resolve(constitutionPath)) {
+    const postContent = computePostEditContent(constitutionText, input.toolName, input.toolInput);
+    const preMap = splitArticles(constitutionText);
+    const postMap = splitArticles(postContent);
+    const changed = [...diffChangedArticleIds(preMap, postMap)];
+    if (changed.length === 0) process.exit(0);
+
+    const amendmentsPath = path.join(projectRoot, 'AMENDMENTS.md');
+    const amendmentsText = fs.existsSync(amendmentsPath)
+      ? fs.readFileSync(amendmentsPath, 'utf8')
+      : '';
+    const today = todayStr();
+    const missing = changed.filter((id) => !amendmentHasSameDayEntry(amendmentsText, id, today));
+    if (missing.length > 0) {
+      process.stderr.write(
+        `Constitutional self-edit blocked: ${missing.join(', ')} changed in CONSTITUTION.md with ` +
+          `no matching same-day entry in AMENDMENTS.md. Log the Amendment first.\n`
+      );
+      process.exit(2);
+    }
+    process.exit(0);
+  }
+
+  const relativeFilePath = toPosix(path.relative(projectRoot, filePath));
   const rows = parseForbiddenPatterns(constitutionText);
   const editedTexts = getEditedTexts(input.toolName, input.toolInput);
   const violation = checkForbiddenPatterns(rows, relativeFilePath, editedTexts);
@@ -161,6 +249,12 @@ module.exports = {
   parseForbiddenPatterns,
   getEditedTexts,
   checkForbiddenPatterns,
+  applyEdit,
+  computePostEditContent,
+  splitArticles,
+  diffChangedArticleIds,
+  todayStr,
+  amendmentHasSameDayEntry,
   main,
 };
 
