@@ -68,6 +68,22 @@ Productivity, knowledge management, and cross-tool utilities.
 | `/skill-tester` | Tests skills against anti-rationalization scenarios |
 | `/write-prd` | Generates a PRD from client brief with mandatory interview + repo exploration |
 
+### hyked-constitution — Architectural Rule Enforcement
+
+Bootstraps and enforces a per-project `CONSTITUTION.md` / `AMENDMENTS.md` pair. A deterministic
+Node.js hook blocks clear-cut violations and silent self-edits; a skill handles nuanced judgment
+calls and the amendment process.
+
+| Command | What It Does |
+|---|---|
+| `constitution-init` | Interviews the user, bootstraps `CONSTITUTION.md` + `AMENDMENTS.md`, stages both |
+| `constitution-keeper` | Enforces every article before code changes; runs the amendment interview if the user insists on proceeding past a violation |
+
+**Hook:** `constitution-guard.js` (plain Node.js, zero dependencies) runs on every `Edit`/`Write`/
+`MultiEdit`. No-ops instantly in any project without a `CONSTITUTION.md`. Denies edits that match a
+`Forbidden Patterns` row, and denies silent edits to `CONSTITUTION.md` itself unless `AMENDMENTS.md`
+already has a same-day entry for the changed article.
+
 ---
 
 ## The `.shadow/` Workspace
@@ -128,6 +144,14 @@ Created at runtime, never committed. Tracks feature lifecycle:
 │           ├── review-agent.md
 │           ├── spec-archivist.md
 │           └── spec-writer.md
+│   └── constitution/                 ← hyked-constitution plugin
+│       ├── skills/
+│       │   ├── constitution-init/
+│       │   └── constitution-keeper/
+│       └── hooks/
+│           ├── hooks.json
+│           ├── constitution-guard.js
+│           └── __tests__/
 ├── CLAUDE.md                         ← Development conventions
 └── README.md
 ```

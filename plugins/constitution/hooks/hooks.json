@@ -1,0 +1,16 @@
+{
+  "description": "Constitution guard: blocks edits that violate CONSTITUTION.md's Forbidden Patterns or silently rewrite an article without a logged Amendment.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/constitution-guard.js\""
+          }
+        ]
+      }
+    ]
+  }
+}
